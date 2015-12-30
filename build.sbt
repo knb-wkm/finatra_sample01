@@ -5,7 +5,7 @@ scalaVersion := "2.11.7"
 parallelExecution in ThisBuild := false
 
 lazy val versions = new {
-  val finatra = "2.1.3-SNAPSHOT"
+  val finatra = "2.1.2"
   val guice = "4.0"
   val logback = "1.0.13"
 }
@@ -13,6 +13,7 @@ lazy val versions = new {
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
   "Twitter Maven" at "https://maven.twttr.com",
+  "Atilika Open Source repository" at "http://www.atilika.org/nexus/content/repositories/atilika",
   Resolver.sonatypeRepo("snapshots")
 )
 
@@ -22,6 +23,9 @@ assemblyMergeStrategy in assembly := {
 }
 
 libraryDependencies ++= Seq(
+  "org.apache.spark" %% "spark-core" % "1.4.1",
+  "org.apache.spark" %% "spark-mllib" % "1.4.1",
+  "org.atilika.kuromoji" % "kuromoji" % "0.7.7",
   "com.twitter.finatra" %% "finatra-http" % versions.finatra,
   "com.twitter.finatra" %% "finatra-httpclient" % versions.finatra,
   "com.twitter.finatra" %% "finatra-slf4j" % versions.finatra,
