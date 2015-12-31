@@ -10,7 +10,6 @@ import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.feature.{HashingTF, IDF}
 
-
 class HelloWorldController extends Controller {
   val conf = new SparkConf().setAppName("simple application").setMaster("local")
   val sc = new SparkContext(conf)
@@ -19,16 +18,17 @@ class HelloWorldController extends Controller {
   val htf = new HashingTF(1000)
   htf.transform(texts)
   val model = NaiveBayesModel.load(sc, "model")
-  val words = List("spark")
-  val test_tf = htf.transform(words)
-  val test = model.predict(test_tf)
 
   get("/hi") { request: Request =>
     info("hi")
-    test + " Hello " + request.params.getOrElse("name", "unnamed")
+    // "Hello " + request.params.getOrElse("name", "unnamed")
   }
 
   post("/hi") { hiRequest: HiRequest =>
-    "Hello " + hiRequest.name + " with id " + hiRequest.id
+    val words = hiRequest.word.split(" ")
+    val test_tf = htf.transform(words)
+    val test = model.predict(test_tf)
+    "label: " + test + " name: " + hiRequest.name + " id: " + hiRequest.id
+    // "Hello " + hiRequest.name + " with id " + hiRequest.id
   }
 }
