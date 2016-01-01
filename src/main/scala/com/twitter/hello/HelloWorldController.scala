@@ -21,14 +21,14 @@ class HelloWorldController extends Controller {
 
   get("/hi") { request: Request =>
     info("hi")
-    // "Hello " + request.params.getOrElse("name", "unnamed")
+    "Hello " + request.params.getOrElse("name", "unnamed")
   }
 
   post("/hi") { hiRequest: HiRequest =>
     val words = hiRequest.word.split(" ")
     val test_tf = htf.transform(words)
     val test = model.predict(test_tf)
-    "label: " + test + " name: " + hiRequest.name + " id: " + hiRequest.id
+    // "label: " + test + " name: " + hiRequest.name + " id: " + hiRequest.id
     // "Hello " + hiRequest.name + " with id " + hiRequest.id
   }
 }
